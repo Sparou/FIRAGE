@@ -58,9 +58,9 @@ private:
         "Sergey",
         "Kolya",
         "Andrey",
-        "Denis"
+        "Denis",
         "Ivan",
-        "Boria",
+        "Boria"
     };
 
     void SpawnBots();

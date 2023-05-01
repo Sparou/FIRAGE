@@ -14,8 +14,8 @@ class SHOOTTHEMUP_API ASTUAIController : public AAIController
     GENERATED_BODY()
 public:
     ASTUAIController();
-    virtual FVector GetFocalPointOnActor(const AActor* Actor) const override;
-
+    AActor* GetFocusOnActor() const;
+    
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTUAIPerceptionComponent* STUAIPerceptionComponent;
@@ -33,5 +33,5 @@ protected:
     virtual void Tick(float DeltaTime) override;
 
 private:
-    AActor* GetFocusOnActor() const;
+    virtual FVector GetFocalPointOnActor(const AActor* Actor) const override;
 };

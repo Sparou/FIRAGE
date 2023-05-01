@@ -27,29 +27,38 @@ public:
 
 protected:
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread")
-    bool BulletSpread = true;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    float InitialBulletSpreadModifier = 1.5f;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    float MaxBulletSpreadModifier = 6.0f;
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread")
+    // bool BulletSpread = true;
+    //
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    // float InitialBulletSpreadModifier = 1.5f;
+    //
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    // float MaxBulletSpreadModifier = 6.0f;
+    //
+    // /* Через какое время будет увеличиваться CurrentBulletSpread */
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    // float BulletSpreadIncreaseTime = 0.15f;
+    //
+    // /* Через какое время будет уменьшаться CurrentBulletSpread */
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    // float BulletSpreadDecreaseTime = 0.15f;
+    //
+    // /* Через какое время после последнего выстрела обновится CurretBulletSpread */
+    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    // float BulletSpreadResetTime = 1.0f; 
 
-    /* Через какое время будет увеличиваться CurrentBulletSpread */
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    float BulletSpreadIncreaseTime = 0.15f;
-
-    /* Через какое время будет уменьшаться CurrentBulletSpread */
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    float BulletSpreadDecreaseTime = 0.15f;
-
-    /* Через какое время после последнего выстрела обновится CurretBulletSpread */
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    float BulletSpreadResetTime = 1.0f; 
+    FRotator RecoilModifier = FRotator(0.1f, 0.1f,0.0f);
     
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float TimeBetweenShots = 0.1f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float BulletSpread = 0.15f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float BotBulletSpread = 100;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stat")
     float Damage = 10.0f;

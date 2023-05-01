@@ -9,7 +9,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 
 
-DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All)
+//DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All)
 
 void USTUOptionsWidget::NativeOnInitialized()
 {
