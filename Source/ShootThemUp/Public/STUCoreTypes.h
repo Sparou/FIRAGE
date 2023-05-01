@@ -130,6 +130,17 @@ enum class ESTUMatchState : uint8
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState)
 
+UENUM(BlueprintType)
+enum class ESTUMenuState : uint8
+{
+    WaitingToStart = 0,
+    MenuStart,
+    ChooseLevel,
+    Options
+};
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangedSignature, ESTUMenuState)
+
 USTRUCT(BlueprintType)
 struct FLevelData
 {

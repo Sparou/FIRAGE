@@ -1,0 +1,30 @@
+// Shoot Them Up Game, All Rights Reserved.
+
+
+#include "Menu/UI/STUOptionsWidget.h"
+
+#include "STUMenuGameModeBase.h"
+#include "Components/Button.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
+
+
+DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All)
+
+void USTUOptionsWidget::NativeOnInitialized()
+{
+    Super::NativeOnInitialized();
+
+    if (MainMenuButton)
+    {
+        MainMenuButton->OnClicked.AddDynamic(this, &USTUOptionsWidget::OnMainMenu);
+    }
+}
+
+void USTUOptionsWidget::OnMainMenu()
+{
+    if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
+
+    const auto GameMode = Cast<ASTUMenuGameModeBase>(GetWorld()->GetAuthGameMode());
+    GameMode->MainMenu();
+}
