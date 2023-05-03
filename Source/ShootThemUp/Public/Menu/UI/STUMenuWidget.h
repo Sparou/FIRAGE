@@ -38,8 +38,5 @@ private:
     void ChooseLevel();
 
     UFUNCTION()
-    void OnQuitGame();
-
-    UFUNCTION()
     void SetOptions();
 };

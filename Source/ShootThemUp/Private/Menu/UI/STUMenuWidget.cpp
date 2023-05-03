@@ -25,10 +25,6 @@ void USTUMenuWidget::NativeOnInitialized()
         OptionsGameButton->OnClicked.AddDynamic(this, &USTUMenuWidget::SetOptions);
     }
 
-    if (QuitGameButton)
-    {
-        QuitGameButton->OnClicked.AddDynamic(this, &USTUMenuWidget::OnQuitGame);
-    }
 }
 
 void USTUMenuWidget::ChooseLevel()
@@ -45,9 +41,4 @@ void USTUMenuWidget::SetOptions()
     
     const auto GameMode = Cast<ASTUMenuGameModeBase>(GetWorld()->GetAuthGameMode());
     GameMode->SetOptions();
-}
-
-void USTUMenuWidget::OnQuitGame()
-{
-    UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true); 
 }

@@ -8,7 +8,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogSTUOptionsWidget, All, All)
 void USTUOptionsWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();

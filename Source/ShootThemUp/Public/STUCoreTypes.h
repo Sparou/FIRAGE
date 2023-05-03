@@ -125,7 +125,8 @@ enum class ESTUMatchState : uint8
     WaitingToStart = 0,
     InProgress,
     Pause,
-    GameOver
+    GameOver,
+    Options
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState)

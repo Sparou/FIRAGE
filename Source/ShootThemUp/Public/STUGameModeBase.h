@@ -33,6 +33,9 @@ public:
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
 
+    void GoOptions() { SetMatchState(ESTUMatchState::Options); }
+    void ReturnPause() { SetMatchState(ESTUMatchState::Pause); }
+
     virtual void RestartPlayer(AController* NewPlayer) override;
 
 protected:

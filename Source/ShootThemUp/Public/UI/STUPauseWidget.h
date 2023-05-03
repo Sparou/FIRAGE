@@ -17,6 +17,9 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UButton* ClearPauseButton;
 
+    UPROPERTY(meta = (BindWidget))
+    UButton* GoOptions;
+
     //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     //TSubclassOf<UUserWidget> GoToPauseWidgetClass;
     
@@ -25,4 +28,7 @@ protected:
 private:
     UFUNCTION()
     void OnClearPause();
+
+    UFUNCTION()
+    void GoOptionsWidget();
 };

@@ -161,7 +161,7 @@ void USTUWeaponComponent::StartFire()
 void USTUWeaponComponent::StopFire()
 {
     if (!CurrentWeapon) return;
-    UE_LOG(LogWeaponComponent, Display, TEXT("STopFire is called!"))
+    // UE_LOG(LogWeaponComponent, Display, TEXT("STopFire is called!"))
     const auto Character = Cast<ASTUBaseCharacter>(GetOwner());
     Character->IsShooting = false;
     CurrentWeapon->StopFire();

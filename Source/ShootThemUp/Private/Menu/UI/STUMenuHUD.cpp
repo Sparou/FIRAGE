@@ -35,6 +35,7 @@ void ASTUMenuHUD::BeginPlay()
 
 void ASTUMenuHUD::OnMenuStateChanged(ESTUMenuState State)
 {
+    USTUBaseWidget* PrevWidget = CurrentWidget;
     if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
@@ -48,6 +49,8 @@ void ASTUMenuHUD::OnMenuStateChanged(ESTUMenuState State)
     if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+        
+
         CurrentWidget->Show();
     }
 }
