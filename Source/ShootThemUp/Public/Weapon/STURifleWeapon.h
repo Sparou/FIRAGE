@@ -18,7 +18,7 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 
 public:
     ASTURifleWeapon();
-    
+
     virtual void StartFire() override;
     virtual void StopFire() override;
 
@@ -26,36 +26,35 @@ public:
     virtual void Zoom(bool Enabled) override;
 
 protected:
-
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread")
-    // bool BulletSpread = true;
-    //
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    // float InitialBulletSpreadModifier = 1.5f;
-    //
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    // float MaxBulletSpreadModifier = 6.0f;
-    //
-    // /* Через какое время будет увеличиваться CurrentBulletSpread */
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    // float BulletSpreadIncreaseTime = 0.15f;
-    //
-    // /* Через какое время будет уменьшаться CurrentBulletSpread */
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    // float BulletSpreadDecreaseTime = 0.15f;
-    //
-    // /* Через какое время после последнего выстрела обновится CurretBulletSpread */
-    // UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    // float BulletSpreadResetTime = 1.0f; 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread")
+    bool BulletSpread = true;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
-    FRotator RecoilModifier = FRotator(0.1f, 0.1f,0.0f);
-    
+    float InitialBulletSpreadModifier = 1.5f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    float MaxBulletSpreadModifier = 6.0f;
+
+    /* Через какое время будет увеличиваться CurrentBulletSpread */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    float BulletSpreadIncreaseTime = 0.15f;
+
+    /* Через какое время будет уменьшаться CurrentBulletSpread */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    float BulletSpreadDecreaseTime = 0.15f;
+
+    /* Через какое время после последнего выстрела обновится CurretBulletSpread */
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    float BulletSpreadResetTime = 1.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spread", meta = (EditCondition = "BulletSpread"))
+    FRotator RecoilModifier = FRotator(0.1f, 0.1f, 0.0f);
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float TimeBetweenShots = 0.1f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float BulletSpread = 0.15f;
+    //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    //float BulletSpread = 0.15f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float BotBulletSpread = 100;
@@ -68,20 +67,20 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     UNiagaraSystem* TraceFX;
-    
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FString TraceTargetName = "TraceTarget";
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float FOVZoomAngle = 50.0f;
-    
+
     virtual void MakeShot() override;
 
     virtual void BeginPlay() override;
 
 private:
     FTimerHandle ShotTimerHandle;
-    
+
     FTimerHandle IncreaseBulletSpreadTimerHandle;
     FTimerHandle DecreaseBulletSpreadTimerHandle;
     FTimerHandle ResetBulletSpreadTimerHandle;
@@ -92,13 +91,13 @@ private:
     void IncreaseBulletSpreadModifier();
     void DecreaseBulletSpreadModifier();
 
-    
+
     UPROPERTY()
     UNiagaraComponent* MuzzleFXComponent;
 
     UPROPERTY()
     UAudioComponent* FireAudioComponent;
-    
+
     void InitFX();
     void SetFXActive(bool IsActive);
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
