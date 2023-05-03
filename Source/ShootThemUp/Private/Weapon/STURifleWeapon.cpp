@@ -26,13 +26,16 @@ void ASTURifleWeapon::StartFire()
     Super::StartFire();
     InitFX();
 
-    //GetWorldTimerManager().ClearTimer(DecreaseBulletSpreadTimerHandle);
+    UE_LOG(LogRifleWeapon, Display, TEXT("Current Bullet Spread = %f"), CurrentBulletSpreadModifier)
+    
+    GetWorldTimerManager().ClearTimer(DecreaseBulletSpreadTimerHandle);
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTURifleWeapon::MakeShot, TimeBetweenShots, true);
 
-    // if(BulletSpread)
-    // {
-    //     GetWorldTimerManager().SetTimer(IncreaseBulletSpreadTimerHandle, this, &ASTURifleWeapon::IncreaseBulletSpreadModifier, BulletSpreadIncreaseTime, true);
-    // }
+    if (BulletSpread)
+    {
+        GetWorldTimerManager().SetTimer(IncreaseBulletSpreadTimerHandle, this, &ASTURifleWeapon::IncreaseBulletSpreadModifier,
+            BulletSpreadIncreaseTime, true);
+    }
 
     MakeShot();
 }
@@ -41,44 +44,46 @@ void ASTURifleWeapon::StopFire()
 {
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
 
-    // if (BulletSpread)
-    // {
-    //     GetWorldTimerManager().ClearTimer(IncreaseBulletSpreadTimerHandle);
-    //     GetWorldTimerManager().SetTimer(ResetBulletSpreadTimerHandle, this, &ASTURifleWeapon::ResetBulletSpreadModifier, BulletSpreadResetTime, false);
-    // }
+    if (BulletSpread)
+    {
+        GetWorldTimerManager().ClearTimer(IncreaseBulletSpreadTimerHandle);
+        GetWorldTimerManager().SetTimer(ResetBulletSpreadTimerHandle, this, &ASTURifleWeapon::ResetBulletSpreadModifier,
+            BulletSpreadResetTime, false);
+    }
 
     SetFXActive(false);
 }
 
-// void ASTURifleWeapon::ResetBulletSpreadModifier()
-// {
-//     GetWorldTimerManager().ClearTimer(ResetBulletSpreadTimerHandle);
-//     GetWorldTimerManager().SetTimer(DecreaseBulletSpreadTimerHandle, this, &ASTURifleWeapon::DecreaseBulletSpreadModifier, BulletSpreadDecreaseTime, true);
-// }
+void ASTURifleWeapon::ResetBulletSpreadModifier()
+{
+    GetWorldTimerManager().ClearTimer(ResetBulletSpreadTimerHandle);
+    GetWorldTimerManager().SetTimer(DecreaseBulletSpreadTimerHandle, this, &ASTURifleWeapon::DecreaseBulletSpreadModifier,
+        BulletSpreadDecreaseTime, true);
+}
 
-// void ASTURifleWeapon::IncreaseBulletSpreadModifier()
-// {
-//     if (CurrentBulletSpreadModifier < MaxBulletSpreadModifier)
-//     {
-//         CurrentBulletSpreadModifier += BulletSpreadIncreaseTime;
-//     }
-//     else
-//     {
-//         GetWorldTimerManager().ClearTimer(IncreaseBulletSpreadTimerHandle);
-//     }
-// }
+void ASTURifleWeapon::IncreaseBulletSpreadModifier()
+{
+    if (CurrentBulletSpreadModifier < MaxBulletSpreadModifier)
+    {
+        CurrentBulletSpreadModifier += BulletSpreadIncreaseTime;
+    }
+    else
+    {
+        GetWorldTimerManager().ClearTimer(IncreaseBulletSpreadTimerHandle);
+    }
+}
 
-// void ASTURifleWeapon::DecreaseBulletSpreadModifier()
-// {
-//     if (CurrentBulletSpreadModifier > InitialBulletSpreadModifier)
-//     {
-//         CurrentBulletSpreadModifier -= BulletSpreadDecreaseTime;
-//     }
-//     else
-//     {
-//         GetWorldTimerManager().ClearTimer(DecreaseBulletSpreadTimerHandle);
-//     }
-// }
+void ASTURifleWeapon::DecreaseBulletSpreadModifier()
+{
+    if (CurrentBulletSpreadModifier > InitialBulletSpreadModifier)
+    {
+        CurrentBulletSpreadModifier -= BulletSpreadDecreaseTime;
+    }
+    else
+    {
+        GetWorldTimerManager().ClearTimer(DecreaseBulletSpreadTimerHandle);
+    }
+}
 
 void ASTURifleWeapon::MakeShot()
 {
@@ -88,7 +93,6 @@ void ASTURifleWeapon::MakeShot()
         return;
     }
 
-    
     const auto OwnerActor = Cast<ACharacter>(GetOwner());
     if (OwnerActor && OwnerActor->IsPlayerControlled())
     {
@@ -100,8 +104,7 @@ void ASTURifleWeapon::MakeShot()
             OwnerActorController->SetControlRotation(CurrentControllerRotation + FRotator(PitchModifier, YawModifier, 0.0f));
         }
     }
-    
-    
+
     FVector TraceStart, TraceEnd;             // Основный трейс по которому будут считаться попадания
     FVector MuzzleTraceStart, MuzzleTraceEnd; // Дополнительный трейс, блокирующий стрельбу через стены
 
@@ -142,7 +145,7 @@ void ASTURifleWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(WeaponFXComponent);
-    //CurrentBulletSpreadModifier = InitialBulletSpreadModifier;
+    CurrentBulletSpreadModifier = InitialBulletSpreadModifier;
 }
 
 void ASTURifleWeapon::InitFX()
@@ -207,7 +210,7 @@ bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
     if (!GetPlayerViewPoint(ViewLocation, ViewRotation)) return false;
 
     TraceStart = ViewLocation;
-    const auto HalfRad = FMath::DegreesToRadians(BulletSpread);
+    auto HalfRad = FMath::DegreesToRadians(CurrentBulletSpreadModifier);
     const FVector ShootDirection = FMath::VRandCone(ViewRotation.Vector(), HalfRad);
 
     const auto STUCharacter = Cast<ACharacter>(GetOwner());
@@ -217,6 +220,7 @@ bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
     {
         const auto AIController = Cast<ASTUAIController>(STUCharacter->GetController());
         if (!AIController) return false;
+        HalfRad = FMath::DegreesToRadians(BulletSpread);
         if (const auto AimActor = Cast<ASTUBaseCharacter>(AIController->GetFocusOnActor()))
         {
             if (AimActor->IsRunning())
